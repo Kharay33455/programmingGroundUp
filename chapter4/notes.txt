@@ -1,0 +1,5 @@
+linking and executing 32 bit files on 64 bit systems
+
+assemble = as -32 -o file.o file.s
+
+link = ld -m elf_i386 -dynamic-linker /lib/ld-linux.so.2 -o file -lc file.o
