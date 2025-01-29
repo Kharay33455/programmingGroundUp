@@ -6,12 +6,12 @@
 # declare global
 .global _start
 _start:
-	pushl 	$2	#push function last argument
+	pushl 	$0	#push function last argument
 	pushl 	$3	# push function first argument
 	call 	power	# call the power function, return value of functions are saved in %eax register
 	addl 	$8, %esp	# move base pointer by 2 words. A word is 4 Bytes.
 	pushl 	%eax	# push current return value to stack
-	pushl 	$3	# push new last arguement
+	pushl 	$0	# push new last arguement
 	pushl 	$2	# push new first arguement
 	call 	power	# call power
 	addl 	$8, %esp	# move base pointer
@@ -28,6 +28,9 @@ power:
 	subl	$4, %esp	# local storage
 	movl	%ebx, -4(%ebp)	# store result
 power_start_loop:
+	cmpl	$0, %ecx
+	movl	$1, -4(%ebp)
+	je	end_loop
 	cmpl	$1, %ecx	# compare value in ecx register to 1
 	je	end_loop	# if equal, exit program
 	movl	-4(%ebp), %eax	# store current result in eax register
